@@ -67,7 +67,7 @@ function addPagination(list) {
   const firstBtn = paginationList.querySelector("button");
   firstBtn.classList.add("active");
 
-  // page through the List
+  // page through the List to and set the current button to active
   paginationList.addEventListener("click", (e) => {
     if (e.target = "BUTTON") {
       const activeBtn = paginationList.querySelector(".active");
@@ -88,7 +88,7 @@ function createSearchBar() {
   const searchHTML = `
   <label for="search" class="student-search">
     <span>Search by name</span>
-    <input id="search" placeholder="Search by name...">
+    <input id="search" placeholder="Search by name..." autocomplete="off">
     <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
   </label>
   `;
@@ -102,13 +102,44 @@ function createSearchBar() {
 * adds the search functionallity to the searchbar
 */
 function filterNames(list) {
-  const searchVal = document.getElementById("search").value;
-  console.log(searchVal);
+  const searchVal = searchField.value.toLowerCase();
+  const newArr = [];
+  for (let i = 0; i < data.length; i++) {
+    const name = `${list[i].name.first} ${list[i].name.last}`;
+    const info = list[i];
+    if (name.toLowerCase().indexOf(searchVal) > -1) {
+      newArr.push(info);
+    }
+  }
+  // display the matching students info and adjust the pagination
+  const paginationList = document.querySelector(".link-list");
+
+  if (newArr.length > 9) {
+    showPage(newArr, 1);
+    addPagination(newArr);
+  } else if (newArr.length < 9 && newArr.length !== 0) {
+    showPage(newArr, 1);
+    paginationList.innerHTML = `<li>
+      <button type="button" class="active">1</button>
+    </li>`;
+  } else {
+    showPage(newArr, 1);
+    paginationList.innerHTML = `<h2>Sorry, not results for "${searchVal}" found</h2>`;
+    console.log("all empty");
+  }
+
 }
 
-
-
-// Call the functions
+// Function calls
 createSearchBar();
 showPage(data, 1);
 addPagination(data);
+
+// save the dynamically created search elements in variables
+const searchField = document.getElementById("search");
+const searchBtn = document.querySelector(".student-search button");
+
+// add the eventlistener to the searchfield, that calls the search function
+searchField.addEventListener("keyup", (e) => {
+  filterNames(data);
+});
