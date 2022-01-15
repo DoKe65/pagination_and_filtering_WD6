@@ -69,7 +69,7 @@ function addPagination(list) {
 
   // page through the List to and set the current button to active
   paginationList.addEventListener("click", (e) => {
-    if (e.target = "BUTTON") {
+    if (e.target.tagName === "BUTTON") {
       const activeBtn = paginationList.querySelector(".active");
       activeBtn.classList.remove("active");
       const targetBtn = e.target;
@@ -141,5 +141,5 @@ const searchBtn = document.querySelector(".student-search button");
 
 // add the eventlistener to the searchfield, that calls the search function
 searchField.addEventListener("keyup", (e) => {
-  filterNames(data);
+    filterNames(data);
 });
