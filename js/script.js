@@ -124,7 +124,7 @@ function filterNames(list) {
     </li>`;
   } else {
     showPage(newArr, 1);
-    paginationList.innerHTML = `<h2>Sorry, not results for "${searchVal}" found</h2>`;
+    paginationList.innerHTML = `<h2>Sorry, there are no matching results for "${searchVal}"</h2>`;
   }
 
 }
