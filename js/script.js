@@ -46,7 +46,7 @@ function showPage(list, page) {
 */
 function addPagination(list) {
   // determins the number of buttons to be created (length of the list devided per 9, rounded result)
-  const numButtons = Math.round(list.length / 9);
+  const numButtons = Math.ceil(list.length / 9);
   // stores the UL that will contain the buttons
   const paginationList = document.querySelector(".link-list");
   // clears the UL of previously displayed buttons
@@ -117,7 +117,7 @@ function filterNames(list) {
   if (newArr.length > 9) {
     showPage(newArr, 1);
     addPagination(newArr);
-  } else if (newArr.length < 9 && newArr.length !== 0) {
+  } else if (newArr.length <= 9 && newArr.length > 0) {
     showPage(newArr, 1);
     paginationList.innerHTML = `<li>
       <button type="button" class="active">1</button>
@@ -125,7 +125,6 @@ function filterNames(list) {
   } else {
     showPage(newArr, 1);
     paginationList.innerHTML = `<h2>Sorry, not results for "${searchVal}" found</h2>`;
-    console.log("all empty");
   }
 
 }
